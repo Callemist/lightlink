@@ -60,7 +60,7 @@ const lightLink = (function () {
             if (oldState) {
                 const keys = Object.keys(oldState);
                 for (let j = 0; j < keys.length; j++) {
-                    newState[keys[i]] = oldState[keys[i]]
+                    newState[keys[j]] = oldState[keys[j]]
                 }
             }
         }
