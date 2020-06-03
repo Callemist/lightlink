@@ -180,7 +180,6 @@ const lightLink = (function () {
         document.body = newState.body;
         document.title = newState.title;
         window.scrollTo(0, newState.scrollPos);
-        fireInitialize();
         fireOnload(newState.state);
     }
 
@@ -289,4 +288,5 @@ const lightLink = (function () {
     return {
         events: events
     };
+
 })();
