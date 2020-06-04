@@ -20,7 +20,7 @@ LightLink is a super lightweight framework that give your server side rendered w
 
 Start by including the following script on pages that you want to be able to initialize LightLink navigation:
 ```html
- <script src="/static/lightlink.js"></script> Real release on jsdelivr coming.
+<script src="/static/lightlink.js"></script> Real release on jsdelivr coming.
 ```
 To turn an `<a href>` link into a LightLink simply add the `data-lightlink` attribute to it.
 ```html
@@ -30,9 +30,9 @@ To turn an `<a href>` link into a LightLink simply add the `data-lightlink` attr
 ---
 To subscribe to a lifecycle event pass it a callback function by calling `lightlink.events.eventName(myFunc);`
 ```javascript
-    lightLink.events.initialize(function(){
-        console.log("Hello from initialize");
-    }); 
+lightLink.events.initialize(function(){
+    console.log("Hello from initialize");
+}); 
 ```
 There are three lifecycle hooks.
 
@@ -40,19 +40,41 @@ There are three lifecycle hooks.
 -  **onload(state)** will run every time the page is loaded.
 -  **beforeunload():state** will run before the page is unloaded.
 
+Lifecycle events are tied to the url path on which the script file contaning them where loaded.
+In practice this means that a script can not have lifecycle events that fire on more than one path. If you want to include the same script on multiple pages that should run from onload or another event, the best way to do it would be something like this.
+
+```html
+<script src="/everypage.js"></script>
+<script src="/page-unique-script.js"></script>
+```
+```javascript
+// Inside everypage.js
+const everyPage = {
+    onload: function() {
+        // code
+    }
+}
+```
+```javascript
+// page-unique-script.js
+lightLink.events.onload(function(){
+    everyPage.onload();
+}); 
+```
+
 ### Storing state between page visits
 ---
 Each page have it's own state object which is built from the return values of the page scripts beforeunload events.
 ```javascript
-    lightLink.events.beforeunload(function () {
-        return { myValue: 1 }
-    }); 
+lightLink.events.beforeunload(function () {
+    return { myValue: 1 }
+}); 
 ```
 This state is then accessible in the onload event the next time the page is loaded.
 ```javascript
-    lightLink.events.onload(function (state) {
-        console.log(state.myValue) --> 1
-    }); 
+lightLink.events.onload(function (state) {
+    console.log(state.myValue) --> 1
+}); 
 ```
 
 **Note that this currently only works when using backward and forward navigation.**
