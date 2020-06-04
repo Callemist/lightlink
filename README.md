@@ -20,7 +20,7 @@ LightLink is a super lightweight framework that give your server side rendered w
 
 Start by including the following script on pages that you want to be able to initialize LightLink navigation:
 ```html
-<script src="/static/lightlink.js"></script> Real release on jsdelivr coming.
+<script src="https://cdn.jsdelivr.net/gh/callemist/lightlink@v1.0.0/lightlink.js"></script>
 ```
 To turn an `<a href>` link into a LightLink simply add the `data-lightlink` attribute to it.
 ```html
